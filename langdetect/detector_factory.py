@@ -8,7 +8,7 @@ except ImportError:
     import json
 
 from .detector import Detector
-from .profiles import profiles
+from .profiles_str import profiles
 from .lang_detect_exception import ErrorCode, LangDetectException
 from .utils.lang_profile import LangProfile
 
@@ -36,9 +36,13 @@ class DetectorFactory(object):
     def load_profile(self):
         langsize, index = len(profiles), 0
         for _p in profiles:
-            profile = LangProfile(**_p)
+#            p_encode = dict(_p)
+#            p_encode['freq'] = dict(zip([x.encode().decode('unicode_escape') for x in _p['freq'].keys()], _p['freq'].values()))
+            json_data = json.loads(_p)
+            profile = LangProfile(**json_data)
             self.add_profile(profile, index, langsize)
             index += 1
+
 
     def load_json_profile(self, json_profiles):
         langsize, index = len(json_profiles), 0
