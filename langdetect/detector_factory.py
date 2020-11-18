@@ -101,7 +101,7 @@ def init_factory():
     global _factory
     if _factory is None:
         _factory = DetectorFactory()
-        _factory.load_profile(PROFILES_DIRECTORY)
+        _factory.load_profile()
 
 def detect(text):
     init_factory()
